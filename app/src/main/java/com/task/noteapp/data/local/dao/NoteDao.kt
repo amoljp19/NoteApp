@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
-    
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertNote(note: Note): Long
+    suspend fun insertNote(note: Note): Long
 
     @Update
     fun updateNote(note: Note)
