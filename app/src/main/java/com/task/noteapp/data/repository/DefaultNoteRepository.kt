@@ -8,20 +8,20 @@ import javax.inject.Inject
 class DefaultNoteRepository @Inject constructor(
     private val noteDao: NoteDao
 ) : NoteRepository {
-    
+
     override suspend fun insertNote(note: Note) {
-        TODO("Not yet implemented")
+        noteDao.insertNote(note)
     }
 
     override suspend fun updateNote(note: Note) {
-        TODO("Not yet implemented")
+        noteDao.updateNote(note)
     }
 
     override suspend fun deleteNote(note: Note) {
-        TODO("Not yet implemented")
+        noteDao.deleteNote(note)
     }
 
     override fun getAllNotes(): Flow<List<Note>> {
-        TODO("Not yet implemented")
+        return noteDao.getAllNotes()
     }
 }
