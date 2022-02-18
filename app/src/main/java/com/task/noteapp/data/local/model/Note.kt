@@ -1,4 +1,4 @@
-package com.task.noteapp.model
+package com.task.noteapp.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
