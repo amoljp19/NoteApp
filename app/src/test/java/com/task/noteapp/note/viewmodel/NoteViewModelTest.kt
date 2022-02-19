@@ -1,15 +1,15 @@
-package com.task.noteapp.data.repository
+package com.task.noteapp.note.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.task.noteapp.CoroutineTestRule
 import com.task.noteapp.MockNoteUtils
-import com.task.noteapp.data.local.dao.NoteDao
 import com.task.noteapp.data.local.model.Note
+import com.task.noteapp.data.repository.NoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,11 +20,12 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-class NoteRepositoryTest {
-    private lateinit var noteRepository: NoteRepository
+class NoteViewModelTest {
+
+    private lateinit var noteViewModel: NoteViewModel
 
     @Mock
-    private lateinit var noteDao: NoteDao
+    private lateinit var noteRepository: NoteRepository
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -37,7 +38,7 @@ class NoteRepositoryTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        noteRepository = DefaultNoteRepository(noteDao)
+        noteViewModel = NoteViewModel(noteRepository)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -45,11 +46,11 @@ class NoteRepositoryTest {
     fun insertNoteTest() {
         coroutineTestRule.testDispatcher.runBlockingTest {
             val mockNote = MockNoteUtils.getMockNote()
-            noteRepository.insertNote(mockNote)
+            noteViewModel.insertNote(mockNote)
 
             val argumentCaptor = argumentCaptor<Note>()
-            verify(noteDao).insertNote(argumentCaptor.capture())
-            assertEquals(mockNote.title, argumentCaptor.firstValue.title);
+            verify(noteRepository).insertNote(argumentCaptor.capture())
+            Assert.assertEquals(mockNote.title, argumentCaptor.firstValue.title);
 
         }
 
@@ -61,11 +62,11 @@ class NoteRepositoryTest {
     fun updateNoteTest() {
         coroutineTestRule.testDispatcher.runBlockingTest {
             val mockNote = MockNoteUtils.getMockNote()
-            noteRepository.updateNote(mockNote.copy(tag = "updated tag"))
+            noteViewModel.updateNote(mockNote.copy(tag = "updated tag"))
 
             val argumentCaptor = argumentCaptor<Note>()
-            verify(noteDao).updateNote(argumentCaptor.capture())
-            assertEquals("updated tag", argumentCaptor.firstValue.tag);
+            verify(noteRepository).updateNote(argumentCaptor.capture())
+            Assert.assertEquals("updated tag", argumentCaptor.firstValue.tag);
         }
 
     }
@@ -74,12 +75,12 @@ class NoteRepositoryTest {
     @Test
     fun deleteNoteTest() {
 
-            val mockNote = MockNoteUtils.getMockNote()
-            noteRepository.deleteNote(mockNote)
+        val mockNote = MockNoteUtils.getMockNote()
+        noteViewModel.deleteNote(mockNote)
 
-            val argumentCaptor = argumentCaptor<Note>()
-            verify(noteDao).deleteNote(argumentCaptor.capture())
-            assertEquals(mockNote.title, argumentCaptor.firstValue.title);
+        val argumentCaptor = argumentCaptor<Note>()
+        verify(noteRepository).deleteNote(argumentCaptor.capture())
+        Assert.assertEquals(mockNote.title, argumentCaptor.firstValue.title);
 
     }
 
@@ -90,15 +91,16 @@ class NoteRepositoryTest {
         coroutineTestRule.testDispatcher.runBlockingTest {
             val mockNotes = MockNoteUtils.getMockNotes()
 
-            whenever(noteDao.getAllNotes()) doReturn flowOf(
+            whenever(noteRepository.getAllNotes()) doReturn flowOf(
                 mockNotes
             )
 
-            val data = noteRepository.getAllNotes()
+            val data = noteViewModel.getAllNotes()
 
-            assertEquals(data.first().get(0), mockNotes.get(0))
-            assertEquals(data.first().get(1), mockNotes.get(1))
-            assertEquals(data.first().get(2), mockNotes.get(2))
+            Assert.assertEquals(data.first().get(0), mockNotes.get(0))
+            Assert.assertEquals(data.first().get(1), mockNotes.get(1))
+            Assert.assertEquals(data.first().get(2), mockNotes.get(2))
         }
     }
+
 }

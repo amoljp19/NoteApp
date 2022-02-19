@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteViewModel @Inject constructor(
-    val noteRepository: NoteRepository
+    private val noteRepository: NoteRepository
 ) : ViewModel() {
 
     suspend fun insertNote(note: Note) {
