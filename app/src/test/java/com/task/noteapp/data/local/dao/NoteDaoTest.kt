@@ -1,5 +1,6 @@
 package com.task.noteapp.data.local.dao
 
+import com.task.noteapp.MockNoteUtils
 import com.task.noteapp.data.local.LocalDatabase
 import com.task.noteapp.data.local.model.Note
 import kotlinx.coroutines.flow.first
@@ -15,7 +16,7 @@ class NoteDaoTest : LocalDatabase() {
     @Throws(InterruptedException::class)
     fun insertNoteTest() = runBlocking {
 
-        val mockNote = getMockNote()
+        val mockNote = MockNoteUtils.getMockNote()
 
         mDatabase.noteDao().insertNote(mockNote)
 
@@ -29,7 +30,7 @@ class NoteDaoTest : LocalDatabase() {
     @Throws(InterruptedException::class)
     fun updateNoteTest() = runBlocking {
 
-        val mockNote = getMockNote()
+        val mockNote = MockNoteUtils.getMockNote()
 
         mDatabase.noteDao().insertNote(mockNote)
 
@@ -49,7 +50,7 @@ class NoteDaoTest : LocalDatabase() {
 
     @Test
     fun deleteNoteTest() = runBlocking {
-        val mockNote = getMockNote()
+        val mockNote = MockNoteUtils.getMockNote()
 
         mDatabase.noteDao().insertNote(mockNote)
 
@@ -62,7 +63,7 @@ class NoteDaoTest : LocalDatabase() {
 
     @Test
     fun getAllNotesTest() = runBlocking {
-        val mockNote = getMockNote()
+        val mockNote = MockNoteUtils.getMockNote()
         mDatabase.noteDao().insertNote(mockNote)
 
         val note2 = Note(2, "title 2", "description 2", 0L, "tag 2")
@@ -74,15 +75,7 @@ class NoteDaoTest : LocalDatabase() {
     }
 
 
-    private fun getMockNote(): Note {
-        return Note(
-            id = 1,
-            title = "title",
-            description = "description",
-            date = 0L,
-            tag = "tag"
-        )
-    }
+
 
 
 }
