@@ -48,6 +48,7 @@ fun AddEditNoteScreen(
                             message = "Note Added"
                         )
                     }
+                    navController.navigateUp()
                 },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
@@ -74,7 +75,7 @@ fun AddEditNoteScreen(
                 onFocusChange = {
                     viewModel.changeTitleFocus(it)
                 },
-                isHintvisible = descriptionState.isHintVisible,
+                isHintvisible = titleState.isHintVisible,
                 singleLine = true,
                 keyboardActions = KeyboardActions(
                     onNext = {

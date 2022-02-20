@@ -28,7 +28,16 @@ fun SetupNavGraph(
         }
 
         composable(
-            route = Screen.AddEditNoteScreen.route,
+            route = Screen.AddEditNoteScreen.route  +
+                    "?noteId={noteId}",
+            arguments = listOf(
+                navArgument(
+                    name = "noteId"
+                ) {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            )
         ) {
             AddEditNoteScreen(navController)
         }

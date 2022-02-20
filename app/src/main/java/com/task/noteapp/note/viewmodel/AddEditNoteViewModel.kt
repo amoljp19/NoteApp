@@ -33,14 +33,14 @@ class AddEditNoteViewModel @Inject constructor(
     )
     val noteDescription: State<NoteTextFieldState> = _noteDescription
 
-    private var currentNoteId: Int = -1
+    private var currentNoteId: Int? = null
 
 
     init {
-        savedStateHandle.get<Int>("id")?.let { noteId ->
+        savedStateHandle.get<Int>("noteId")?.let { noteId ->
             if (noteId != -1) {
                 viewModelScope.launch {
-                    noteRepository.getNoteById(noteId).also { note ->
+                    noteRepository.getNoteById(noteId)?.also { note ->
                         currentNoteId = note.id
                         _noteTitle.value = noteTitle.value.copy(
                             text = note.title,

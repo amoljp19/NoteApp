@@ -23,10 +23,6 @@ class NoteViewModel @Inject constructor(
     val notesLiveData: LiveData<List<Note>> = _notesLiveData
 
     init {
-        viewModelScope.launch {
-            insertNote(DummyNoteRepository.getDummyNote())    //ToDo just for testing purpose used, remove it after test
-        }
-
         getNotes()
     }
 
