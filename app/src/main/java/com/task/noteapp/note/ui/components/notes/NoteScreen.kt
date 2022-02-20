@@ -1,16 +1,19 @@
 package com.task.noteapp.note.ui.components
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +22,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.task.noteapp.data.local.model.Note
-import com.task.noteapp.data.repository.DummyNoteRepository
 import com.task.noteapp.note.ui.nav.Screen
 import com.task.noteapp.note.viewmodel.NoteViewModel
 import kotlinx.coroutines.launch
@@ -33,12 +35,19 @@ fun NotesScreen(
     val state = viewModel.notesLiveData.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+    val deletedItem = remember { mutableStateListOf<Note>() }
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(route = Screen.AddEditNoteScreen.passArguments(1, "note1", "description1"))
+                    navController.navigate(
+                        route = Screen.AddEditNoteScreen.passArguments(
+                            1,
+                            "note1",
+                            "description1"
+                        )
+                    )
                 },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
@@ -48,27 +57,38 @@ fun NotesScreen(
         scaffoldState = scaffoldState
     ) {
 
-        LazyColumn(modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        LazyColumn(
+            modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp)
         ) {
             state?.let {
-                items(items = state){ note ->
-                    NoteItem(
-                        note,
-                        modifier = Modifier.fillMaxSize(),
-                        onDeleteClick = {
-                            viewModel.delete(note)
-                            scope.launch {
-                                scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Note deleted"
-                                )
-                            }
-                        }
-                    )
 
-                }
+                itemsIndexed(
+                    items = state,
+                    itemContent = { _, note ->
+                        AnimatedVisibility(
+                            visible = !deletedItem.contains(note),
+                            enter = expandVertically(),
+                            exit = shrinkVertically(animationSpec = tween(durationMillis = 1000))
+                        ) {
+                            NoteItem(
+                                note,
+                                modifier = Modifier.fillMaxSize(),
+                                onDeleteClick = {
+                                    viewModel.delete(note)
+                                    deletedItem.add(note)
+                                    scope.launch {
+                                        scaffoldState.snackbarHostState.showSnackbar(
+                                            message = "Note deleted"
+                                        )
+                                    }
+                                }
+                            )
+                        }
+                    }
+                )
             }
         }
 
@@ -80,5 +100,5 @@ fun NotesScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun NoteScreenPreview() {
-    NotesScreen(navController = rememberNavController() )
+    NotesScreen(navController = rememberNavController())
 }
