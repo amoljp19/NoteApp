@@ -21,6 +21,10 @@ class DefaultNoteRepository @Inject constructor(
         noteDao.deleteNote(note)
     }
 
+    override suspend fun getNoteById(id: Int): Note {
+        return noteDao.getNoteById(id)
+    }
+
     override fun getAllNotes(): Flow<List<Note>> {
         return noteDao.getAllNotes()
     }
