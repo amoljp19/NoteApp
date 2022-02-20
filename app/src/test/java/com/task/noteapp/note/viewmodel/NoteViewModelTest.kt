@@ -1,11 +1,13 @@
 package com.task.noteapp.note.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
 import com.task.noteapp.CoroutineTestRule
 import com.task.noteapp.MockNoteUtils
 import com.task.noteapp.data.local.model.Note
 import com.task.noteapp.data.repository.NoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
@@ -13,12 +15,10 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.*
 
 class NoteViewModelTest {
 
@@ -26,6 +26,10 @@ class NoteViewModelTest {
 
     @Mock
     private lateinit var noteRepository: NoteRepository
+
+    @Mock
+    private lateinit var observer: Observer<List<Note>>
+
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -41,7 +45,7 @@ class NoteViewModelTest {
         noteViewModel = NoteViewModel(noteRepository)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+   /* @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun insertNoteTest() {
         coroutineTestRule.testDispatcher.runBlockingTest {
@@ -69,18 +73,43 @@ class NoteViewModelTest {
             Assert.assertEquals("updated tag", argumentCaptor.firstValue.tag);
         }
 
+    }*/
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun deleteTest() {
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val mockNote = MockNoteUtils.getMockNote()
+            noteViewModel.delete(mockNote)
+
+            val argumentCaptor = argumentCaptor<Note>()
+            verify(noteRepository).deleteNote(argumentCaptor.capture())
+            Assert.assertEquals(mockNote.title, argumentCaptor.firstValue.title);
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun deleteNoteTest() {
+    fun getNotesTest(){
 
-        val mockNote = MockNoteUtils.getMockNote()
-        noteViewModel.deleteNote(mockNote)
+        coroutineTestRule.testDispatcher.runBlockingTest {
 
-        val argumentCaptor = argumentCaptor<Note>()
-        verify(noteRepository).deleteNote(argumentCaptor.capture())
-        Assert.assertEquals(mockNote.title, argumentCaptor.firstValue.title);
+            //Given
+            val mockNotes = MockNoteUtils.getMockNotes()
+
+            whenever(noteRepository.getAllNotes()) doReturn flowOf(
+               mockNotes
+            )
+
+            //When
+            noteViewModel.getNotes()
+
+
+            //Then
+            noteViewModel.notesLiveData.observeForever(observer)
+            verify(observer).onChanged(ArgumentMatchers.refEq(noteViewModel.notesLiveData.value))
+
+        }
 
     }
 

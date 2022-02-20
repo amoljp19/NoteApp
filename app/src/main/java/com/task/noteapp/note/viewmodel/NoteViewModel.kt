@@ -26,13 +26,13 @@ class NoteViewModel @Inject constructor(
         getNotes()
     }
 
-    suspend fun insertNote(note: Note) {
-        noteRepository.insertNote(note)
-    }
-
-    suspend fun updateNote(note: Note) {
-        noteRepository.updateNote(note)
-    }
+//    suspend fun insertNote(note: Note) {
+//        noteRepository.insertNote(note)
+//    }
+//
+//    suspend fun updateNote(note: Note) {
+//        noteRepository.updateNote(note)
+//    }
 
     fun getAllNotes(): Flow<List<Note>> {
         return noteRepository.getAllNotes()

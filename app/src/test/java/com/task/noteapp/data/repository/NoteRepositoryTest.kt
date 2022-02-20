@@ -73,13 +73,14 @@ class NoteRepositoryTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun deleteNoteTest() {
-
+        coroutineTestRule.testDispatcher.runBlockingTest {
             val mockNote = MockNoteUtils.getMockNote()
             noteRepository.deleteNote(mockNote)
 
             val argumentCaptor = argumentCaptor<Note>()
             verify(noteDao).deleteNote(argumentCaptor.capture())
             assertEquals(mockNote.title, argumentCaptor.firstValue.title);
+        }
 
     }
 
