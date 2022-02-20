@@ -17,7 +17,7 @@ class DefaultNoteRepository @Inject constructor(
         noteDao.updateNote(note)
     }
 
-    override fun deleteNote(note: Note) {
+    override suspend fun deleteNote(note: Note) {
         noteDao.deleteNote(note)
     }
 

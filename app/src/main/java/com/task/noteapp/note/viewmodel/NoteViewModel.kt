@@ -38,10 +38,6 @@ class NoteViewModel @Inject constructor(
         noteRepository.updateNote(note)
     }
 
-    fun deleteNote(note: Note) {
-        noteRepository.deleteNote(note)
-    }
-
     fun getAllNotes(): Flow<List<Note>> {
         return noteRepository.getAllNotes()
     }
@@ -51,6 +47,12 @@ class NoteViewModel @Inject constructor(
             getAllNotes().collect {
                 _notesLiveData.value = it
             }
+        }
+    }
+
+    fun delete(note: Note){
+        viewModelScope.launch {
+            noteRepository.deleteNote(note)
         }
     }
 

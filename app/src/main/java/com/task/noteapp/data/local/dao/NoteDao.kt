@@ -14,7 +14,7 @@ interface NoteDao {
     suspend fun updateNote(note: Note)
 
     @Delete
-    fun deleteNote(note: Note)
+    suspend fun deleteNote(note: Note)
 
     @Query("select * from ${Note.TABLE_NAME}")
     fun getAllNotes():Flow<List<Note>>

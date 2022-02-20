@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,6 +22,7 @@ import com.task.noteapp.data.local.model.Note
 import com.task.noteapp.data.repository.DummyNoteRepository
 import com.task.noteapp.note.ui.nav.Screen
 import com.task.noteapp.note.viewmodel.NoteViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun NotesScreen(
@@ -30,6 +32,7 @@ fun NotesScreen(
 
     val state = viewModel.notesLiveData.value
     val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         floatingActionButton = {
@@ -54,8 +57,17 @@ fun NotesScreen(
                 items(items = state){ note ->
                     NoteItem(
                         note,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
+                        onDeleteClick = {
+                            viewModel.delete(note)
+                            scope.launch {
+                                scaffoldState.snackbarHostState.showSnackbar(
+                                    message = "Note deleted"
+                                )
+                            }
+                        }
                     )
+
                 }
             }
         }

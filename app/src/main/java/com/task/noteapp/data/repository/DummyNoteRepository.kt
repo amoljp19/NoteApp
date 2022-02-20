@@ -7,10 +7,10 @@ object DummyNoteRepository {
     internal fun getDummyNote(): Note {
         return Note(
             id = 1,
-            title = "title test",
-            description = "description test",
+            title = "title 1",
+            description = "description 1",
             date = 0L,
-            tag = "tag"
+            tag = "tag 1"
         )
     }
 

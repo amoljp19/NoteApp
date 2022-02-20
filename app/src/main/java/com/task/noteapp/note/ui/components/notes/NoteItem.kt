@@ -20,6 +20,7 @@ import com.task.noteapp.data.repository.DummyNoteRepository
 fun NoteItem(
     note : Note,
     modifier: Modifier = Modifier,
+    onDeleteClick: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -47,7 +48,7 @@ fun NoteItem(
             )
         }
         IconButton(
-            onClick = {},
+            onClick = onDeleteClick,
             modifier = Modifier.align(Alignment.BottomEnd)
         ) {
             Icon(
@@ -62,5 +63,9 @@ fun NoteItem(
 @Preview(showSystemUi = true)
 @Composable
 fun NoteItemPreview() {
-    NoteItem(note = DummyNoteRepository.getDummyNote(), modifier = Modifier.fillMaxSize())
+    NoteItem(
+        note = DummyNoteRepository.getDummyNote(),
+        modifier = Modifier.fillMaxSize(),
+        onDeleteClick ={}
+    )
 }
