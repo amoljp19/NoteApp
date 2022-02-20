@@ -21,7 +21,7 @@ fun NotesScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate(route = Screen.AddEditNoteScreen.route)
+                        navController.navigate(route = Screen.AddEditNoteScreen.passArguments(1, "note1", "description1"))
                     }
             )
         }
