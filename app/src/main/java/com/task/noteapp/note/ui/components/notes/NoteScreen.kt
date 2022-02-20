@@ -78,7 +78,8 @@ fun NotesScreen(
                                     .fillMaxSize()
                                     .clickable {
                                         navController.navigate(
-                                            route = Screen.AddEditNoteScreen.route
+                                            route = Screen.AddEditNoteScreen.route +
+                                                    "?noteId=${note.id}"
                                         )
                                     },
                                 onDeleteClick = {
