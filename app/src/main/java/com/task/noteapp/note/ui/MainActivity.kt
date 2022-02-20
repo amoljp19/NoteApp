@@ -10,14 +10,14 @@ import com.task.noteapp.note.ui.nav.SetupNavGraph
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var navController: NavController
+    lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             navController = rememberNavController()
 
-            SetupNavGraph(navController = navController as NavHostController)
+            SetupNavGraph(navController = navController)
         }
     }
 }
