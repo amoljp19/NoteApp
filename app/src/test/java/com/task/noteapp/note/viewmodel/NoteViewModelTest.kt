@@ -45,36 +45,6 @@ class NoteViewModelTest {
         noteViewModel = NoteViewModel(noteRepository)
     }
 
-   /* @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun insertNoteTest() {
-        coroutineTestRule.testDispatcher.runBlockingTest {
-            val mockNote = MockNoteUtils.getMockNote()
-            noteViewModel.insertNote(mockNote)
-
-            val argumentCaptor = argumentCaptor<Note>()
-            verify(noteRepository).insertNote(argumentCaptor.capture())
-            Assert.assertEquals(mockNote.title, argumentCaptor.firstValue.title);
-
-        }
-
-    }
-
-
-    @ExperimentalCoroutinesApi
-    @Test
-    fun updateNoteTest() {
-        coroutineTestRule.testDispatcher.runBlockingTest {
-            val mockNote = MockNoteUtils.getMockNote()
-            noteViewModel.updateNote(mockNote.copy(tag = "updated tag"))
-
-            val argumentCaptor = argumentCaptor<Note>()
-            verify(noteRepository).updateNote(argumentCaptor.capture())
-            Assert.assertEquals("updated tag", argumentCaptor.firstValue.tag);
-        }
-
-    }*/
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun deleteTest() {
