@@ -1,12 +1,12 @@
 package com.task.noteapp.note.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.*
 import com.task.noteapp.data.local.model.Note
 import com.task.noteapp.data.repository.DummyNoteRepository
 import com.task.noteapp.data.repository.NoteRepository
+import com.task.noteapp.note.ui.components.addeditnote.NoteTextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteViewModel @Inject constructor(
-    private val noteRepository: NoteRepository
+    private val noteRepository: NoteRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _notesLiveData = MutableLiveData<List<Note>>()
