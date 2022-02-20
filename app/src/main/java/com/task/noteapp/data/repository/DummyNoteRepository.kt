@@ -14,7 +14,7 @@ object DummyNoteRepository {
         )
     }
 
-    internal fun getDummyNotes() : List<Note> {
+    internal fun getDummyNotes(): List<Note> {
         return listOf(
             Note(
                 id = 1,

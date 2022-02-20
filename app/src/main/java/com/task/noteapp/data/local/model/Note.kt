@@ -10,9 +10,9 @@ data class Note(
     var title: String,
     var description: String,
     var date: Long,
-    var tag:String
+    var tag: String
 ) {
-    companion object{
+    companion object {
         const val TABLE_NAME = "notes_table"
     }
 }

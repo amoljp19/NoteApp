@@ -6,7 +6,6 @@ import androidx.compose.ui.focus.FocusState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.task.noteapp.data.local.model.Note
 import com.task.noteapp.data.repository.NoteRepository
 import com.task.noteapp.note.ui.components.addeditnote.NoteTextFieldState
@@ -29,13 +28,12 @@ class AddEditNoteViewModel @Inject constructor(
 
     private val _noteDescription = mutableStateOf(
         NoteTextFieldState(
-        hint = "Enter description..."
-    )
+            hint = "Enter description..."
+        )
     )
     val noteDescription: State<NoteTextFieldState> = _noteDescription
 
     private var currentNoteId: Int? = null
-
 
 
     init {
@@ -58,7 +56,7 @@ class AddEditNoteViewModel @Inject constructor(
         }
     }
 
-    fun addNewNote(){
+    fun addNewNote() {
         viewModelScope.launch {
             noteRepository.insertNote(
                 Note(
@@ -72,7 +70,7 @@ class AddEditNoteViewModel @Inject constructor(
         }
     }
 
-    fun updateNote(){
+    fun updateNote() {
         viewModelScope.launch {
             noteRepository.updateNote(
                 Note(
@@ -86,13 +84,13 @@ class AddEditNoteViewModel @Inject constructor(
         }
     }
 
-    fun enteredTitle(title : String){
+    fun enteredTitle(title: String) {
         _noteTitle.value = noteTitle.value.copy(
             text = title
         )
     }
 
-    fun changeTitleFocus(focusState: FocusState){
+    fun changeTitleFocus(focusState: FocusState) {
         _noteTitle.value = noteTitle.value.copy(
             isHintVisible = !focusState.isFocused
                     && noteTitle.value.text.isBlank()
@@ -100,13 +98,13 @@ class AddEditNoteViewModel @Inject constructor(
     }
 
 
-    fun enteredDescription(description : String){
+    fun enteredDescription(description: String) {
         _noteDescription.value = noteDescription.value.copy(
             text = description
         )
     }
 
-    fun changeDescriptionFocus(focusState: FocusState){
+    fun changeDescriptionFocus(focusState: FocusState) {
         _noteDescription.value = noteDescription.value.copy(
             isHintVisible = !focusState.isFocused
                     && noteDescription.value.text.isBlank()

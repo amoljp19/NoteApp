@@ -14,7 +14,7 @@ object MockNoteUtils {
         )
     }
 
-    internal fun getMockNotes() : List<Note> {
+    internal fun getMockNotes(): List<Note> {
         return listOf(
             Note(
                 id = 1,

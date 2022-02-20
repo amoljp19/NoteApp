@@ -1,6 +1,5 @@
 package com.task.noteapp.note.ui.nav
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
@@ -28,7 +27,7 @@ fun SetupNavGraph(
         }
 
         composable(
-            route = Screen.AddEditNoteScreen.route  +
+            route = Screen.AddEditNoteScreen.route +
                     "?noteId={noteId}&noteTag={noteTag}",
             arguments = listOf(
                 navArgument(

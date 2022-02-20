@@ -23,7 +23,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.task.noteapp.data.local.model.Note
-import com.task.noteapp.data.repository.DummyNoteRepository
 import com.task.noteapp.note.ui.nav.Screen
 import com.task.noteapp.note.viewmodel.NoteViewModel
 import kotlinx.coroutines.launch
@@ -34,7 +33,7 @@ fun NotesScreen(
     viewModel: NoteViewModel = hiltViewModel()
 ) {
 
-   // val state = DummyNoteRepository.getDummyNotes()
+    // val state = DummyNoteRepository.getDummyNotes()
     val state = viewModel.notesLiveData.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()

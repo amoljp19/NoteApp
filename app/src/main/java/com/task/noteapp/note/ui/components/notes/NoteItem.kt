@@ -1,6 +1,5 @@
 package com.task.noteapp.note.ui.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -19,7 +18,7 @@ import com.task.noteapp.data.repository.DummyNoteRepository
 
 @Composable
 fun NoteItem(
-    note : Note,
+    note: Note,
     modifier: Modifier = Modifier,
     onDeleteClick: () -> Unit
 ) {
@@ -67,6 +66,6 @@ fun NoteItemPreview() {
     NoteItem(
         note = DummyNoteRepository.getDummyNote(),
         modifier = Modifier.fillMaxSize(),
-        onDeleteClick ={}
+        onDeleteClick = {}
     )
 }

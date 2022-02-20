@@ -69,11 +69,10 @@ class AddEditNoteViewModelTest {
 
 
 
-            Assert.assertEquals("",  addEditNoteViewModel.noteTitle.value.text);
+            Assert.assertEquals("", addEditNoteViewModel.noteTitle.value.text);
 
         }
     }
-
 
 
     // ToDo need to spent more time on this test case, for timebeing passing
@@ -93,9 +92,9 @@ class AddEditNoteViewModelTest {
 
 
     @Test
-    fun enteredTitleTest(){
+    fun enteredTitleTest() {
 
-        val note =  NoteTextFieldState("abc", "", false, false)
+        val note = NoteTextFieldState("abc", "", false, false)
 
         addEditNoteViewModel.enteredTitle(note.text)
 
@@ -103,19 +102,19 @@ class AddEditNoteViewModelTest {
     }
 
     @Test
-    fun enteredDescriptionTest(){
+    fun enteredDescriptionTest() {
 
-        val note =  NoteTextFieldState("abc", "", false, false)
+        val note = NoteTextFieldState("abc", "", false, false)
 
 
         addEditNoteViewModel.enteredDescription(note.text)
 
         Assert.assertEquals("abc", addEditNoteViewModel.noteDescription.value.text)
     }
-    
+
     @Test
-    fun changeTitleFocusTest(){
-        val note =  NoteTextFieldState("", "", false, false)
+    fun changeTitleFocusTest() {
+        NoteTextFieldState("", "", false, false)
 
         whenever(focusState.isFocused) doReturn false
 
@@ -126,8 +125,8 @@ class AddEditNoteViewModelTest {
     }
 
     @Test
-    fun changeDescriptionFocusTest(){
-        val note =  NoteTextFieldState("", "", false, false)
+    fun changeDescriptionFocusTest() {
+        NoteTextFieldState("", "", false, false)
 
         whenever(focusState.isFocused) doReturn false
 

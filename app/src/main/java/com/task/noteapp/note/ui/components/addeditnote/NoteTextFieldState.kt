@@ -4,5 +4,5 @@ data class NoteTextFieldState(
     var text: String = "",
     val hint: String = "",
     val isHintVisible: Boolean = true,
-    val isUpdateTag : Boolean = true
+    val isUpdateTag: Boolean = true
 )

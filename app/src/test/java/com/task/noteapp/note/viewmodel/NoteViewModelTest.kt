@@ -7,7 +7,6 @@ import com.task.noteapp.MockNoteUtils
 import com.task.noteapp.data.local.model.Note
 import com.task.noteapp.data.repository.NoteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
@@ -18,7 +17,10 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 // ToDo need to spent more time on all condition, for timebeing only success case handled here
 class NoteViewModelTest {
@@ -61,7 +63,7 @@ class NoteViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun getNotesTest(){
+    fun getNotesTest() {
 
         coroutineTestRule.testDispatcher.runBlockingTest {
 
@@ -69,7 +71,7 @@ class NoteViewModelTest {
             val mockNotes = MockNoteUtils.getMockNotes()
 
             whenever(noteRepository.getAllNotes()) doReturn flowOf(
-               mockNotes
+                mockNotes
             )
 
             //When
