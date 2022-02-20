@@ -1,12 +1,23 @@
 package com.task.noteapp.note.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.task.noteapp.R
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.task.noteapp.note.ui.nav.SetupNavGraph
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContent {
+            navController = rememberNavController()
+
+            SetupNavGraph(navController = navController as NavHostController)
+        }
     }
 }

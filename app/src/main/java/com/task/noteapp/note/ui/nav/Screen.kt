@@ -1,4 +1,4 @@
-package com.task.noteapp.note.ui.components.nav
+package com.task.noteapp.note.ui.nav
 
 sealed class Screen(val route : String){
     object NotesScreen: Screen("notes_screen")
