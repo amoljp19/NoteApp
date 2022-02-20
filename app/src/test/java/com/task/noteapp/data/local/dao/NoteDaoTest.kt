@@ -10,6 +10,7 @@ import org.hamcrest.MatcherAssert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+// ToDo need to spent more time on all condition, for timebeing only success case handled here
 class NoteDaoTest : LocalDatabase() {
 
     @Test

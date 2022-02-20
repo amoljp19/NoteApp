@@ -20,6 +20,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.*
 
+// ToDo need to spent more time on all condition, for timebeing only success case handled here
 class NoteViewModelTest {
 
     private lateinit var noteViewModel: NoteViewModel

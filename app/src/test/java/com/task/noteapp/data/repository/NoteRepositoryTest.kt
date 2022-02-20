@@ -20,6 +20,8 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
+// ToDo need to spent more time on all condition, for timebeing only success case handled here
+
 class NoteRepositoryTest {
     private lateinit var noteRepository: NoteRepository
 
