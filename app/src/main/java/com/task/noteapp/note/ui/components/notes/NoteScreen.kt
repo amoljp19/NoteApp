@@ -1,12 +1,18 @@
 package com.task.noteapp.note.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.task.noteapp.note.ui.nav.Screen
@@ -15,17 +21,37 @@ import com.task.noteapp.note.ui.nav.Screen
 fun NotesScreen(
     navController: NavController
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        item() {
-            NoteItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        navController.navigate(route = Screen.AddEditNoteScreen.passArguments(1, "note1", "description1"))
-                    }
-            )
+
+    val scaffoldState = rememberScaffoldState()
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(route = Screen.AddEditNoteScreen.passArguments(1, "note1", "description1"))
+                },
+                backgroundColor = MaterialTheme.colors.primary
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add note")
+            }
+        },
+        scaffoldState = scaffoldState
+    ) {
+
+        LazyColumn(modifier =
+        Modifier.fillMaxSize()
+            .padding(16.dp)) {
+            item() {
+                NoteItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
         }
+
     }
+
+
 }
 
 @Preview(showSystemUi = true)
