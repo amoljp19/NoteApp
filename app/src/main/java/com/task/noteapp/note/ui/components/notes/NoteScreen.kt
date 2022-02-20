@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.task.noteapp.data.local.model.Note
+import com.task.noteapp.data.repository.DummyNoteRepository
 import com.task.noteapp.note.ui.nav.Screen
 import com.task.noteapp.note.viewmodel.NoteViewModel
 import kotlinx.coroutines.launch
@@ -32,6 +34,7 @@ fun NotesScreen(
     viewModel: NoteViewModel = hiltViewModel()
 ) {
 
+   // val state = DummyNoteRepository.getDummyNotes()
     val state = viewModel.notesLiveData.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -75,7 +78,17 @@ fun NotesScreen(
                         ) {
                             NoteItem(
                                 note,
-                                modifier = Modifier.fillMaxSize(),
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable {
+                                        navController.navigate(
+                                            route = Screen.AddEditNoteScreen.passArguments(
+                                                1,
+                                                "note1",
+                                                "description1"
+                                            )
+                                        )
+                                    },
                                 onDeleteClick = {
                                     viewModel.delete(note)
                                     deletedItem.add(note)

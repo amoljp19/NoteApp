@@ -42,6 +42,7 @@ fun SetupNavGraph(
             Log.d("args", it.arguments?.getInt(ADD_EDIT_ARGUMENT_KEY1).toString())
             Log.d("args", it.arguments?.getString(ADD_EDIT_ARGUMENT_KEY2).toString())
             Log.d("args", it.arguments?.getString(ADD_EDIT_ARGUMENT_KEY3).toString())
+            val note =
             AddEditNoteScreen(navController)
         }
     }
