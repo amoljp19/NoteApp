@@ -15,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteViewModel @Inject constructor(
-    private val noteRepository: NoteRepository,
-    savedStateHandle: SavedStateHandle
+    private val noteRepository: NoteRepository
 ) : ViewModel() {
 
     private val _notesLiveData = MutableLiveData<List<Note>>()
