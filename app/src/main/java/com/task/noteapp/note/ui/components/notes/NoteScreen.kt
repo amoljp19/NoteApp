@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -13,15 +14,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.task.noteapp.data.local.model.Note
+import com.task.noteapp.data.repository.DummyNoteRepository
 import com.task.noteapp.note.ui.nav.Screen
+import com.task.noteapp.note.viewmodel.NoteViewModel
 
 @Composable
 fun NotesScreen(
-    navController: NavController
+    navController: NavController/*,
+    viewModel: NoteViewModel = hiltViewModel()*/
 ) {
 
+    //val state = viewModel.notesLiveData.value
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -39,12 +46,14 @@ fun NotesScreen(
     ) {
 
         LazyColumn(modifier =
-        Modifier.fillMaxSize()
-            .padding(16.dp)) {
-            item() {
+        Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+        ) {
+            items(items = DummyNoteRepository.getDummyNotes()){ note ->
                 NoteItem(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    note,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }

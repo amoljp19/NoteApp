@@ -13,9 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.task.noteapp.data.local.model.Note
+import com.task.noteapp.data.repository.DummyNoteRepository
 
 @Composable
 fun NoteItem(
+    note : Note,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -28,7 +31,7 @@ fun NoteItem(
                 .padding(end = 32.dp)
         ) {
             Text(
-                text = "title",
+                text = note.title,
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onSurface,
                 maxLines = 1,
@@ -36,7 +39,7 @@ fun NoteItem(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "description",
+                text = note.description,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface,
                 maxLines = 10,
@@ -59,5 +62,5 @@ fun NoteItem(
 @Preview(showSystemUi = true)
 @Composable
 fun NoteItemPreview() {
-    NoteItem()
+    NoteItem(note = DummyNoteRepository.getDummyNote(), modifier = Modifier.fillMaxSize())
 }
