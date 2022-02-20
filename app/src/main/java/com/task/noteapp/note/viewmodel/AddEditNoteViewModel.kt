@@ -6,6 +6,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.task.noteapp.data.local.model.Note
 import com.task.noteapp.data.repository.NoteRepository
 import com.task.noteapp.note.ui.components.addeditnote.NoteTextFieldState
@@ -36,6 +37,7 @@ class AddEditNoteViewModel @Inject constructor(
     private var currentNoteId: Int? = null
 
 
+
     init {
         savedStateHandle.get<Int>("noteId")?.let { noteId ->
             if (noteId != -1) {
@@ -59,6 +61,20 @@ class AddEditNoteViewModel @Inject constructor(
     fun addNewNote(){
         viewModelScope.launch {
             noteRepository.insertNote(
+                Note(
+                    id = currentNoteId,
+                    title = noteTitle.value.text,
+                    description = noteDescription.value.text,
+                    date = System.currentTimeMillis(),
+                    tag = ""
+                )
+            )
+        }
+    }
+
+    fun updateNote(){
+        viewModelScope.launch {
+            noteRepository.updateNote(
                 Note(
                     id = currentNoteId,
                     title = noteTitle.value.text,

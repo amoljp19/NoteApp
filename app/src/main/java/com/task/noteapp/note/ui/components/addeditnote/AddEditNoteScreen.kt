@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddEditNoteScreen(
     navController: NavController,
+    noteTag : String,
     viewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
 
@@ -42,10 +43,18 @@ fun AddEditNoteScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.addNewNote()
+                    var msg = ""
+                    if(noteTag.equals("")){
+                        viewModel.addNewNote()
+                        msg = "Note Added"
+                    }
+                    else{
+                        viewModel.updateNote()
+                        msg = "Note Updated"
+                    }
                     scope.launch {
                         scaffoldState.snackbarHostState.showSnackbar(
-                            message = "Note Added"
+                            message = msg
                         )
                     }
                     navController.navigateUp()

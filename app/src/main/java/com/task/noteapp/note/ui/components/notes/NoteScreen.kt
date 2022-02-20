@@ -79,7 +79,7 @@ fun NotesScreen(
                                     .clickable {
                                         navController.navigate(
                                             route = Screen.AddEditNoteScreen.route +
-                                                    "?noteId=${note.id}"
+                                                    "?noteId=${note.id}&noteTag=update"
                                         )
                                     },
                                 onDeleteClick = {
