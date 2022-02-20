@@ -84,6 +84,20 @@ class NoteRepositoryTest {
 
     }
 
+    @Test
+    fun getNoteByIdTest() {
+        coroutineTestRule.testDispatcher.runBlockingTest {
+            val mockNotes = MockNoteUtils.getMockNotes()
+
+            whenever(noteDao.getNoteById(1)) doReturn mockNotes.get(1)
+
+
+            val data = noteRepository.getNoteById(1)
+
+            assertEquals(data, mockNotes.get(1))
+        }
+    }
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
