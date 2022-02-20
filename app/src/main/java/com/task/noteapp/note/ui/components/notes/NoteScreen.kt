@@ -24,11 +24,11 @@ import com.task.noteapp.note.viewmodel.NoteViewModel
 
 @Composable
 fun NotesScreen(
-    navController: NavController/*,
-    viewModel: NoteViewModel = hiltViewModel()*/
+    navController: NavController,
+    viewModel: NoteViewModel = hiltViewModel()
 ) {
 
-    //val state = viewModel.notesLiveData.value
+    val state = viewModel.notesLiveData.value
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -50,11 +50,13 @@ fun NotesScreen(
             .fillMaxSize()
             .padding(16.dp)
         ) {
-            items(items = DummyNoteRepository.getDummyNotes()){ note ->
-                NoteItem(
-                    note,
-                    modifier = Modifier.fillMaxSize()
-                )
+            state?.let {
+                items(items = state){ note ->
+                    NoteItem(
+                        note,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
         }
 
